@@ -1,0 +1,109 @@
+Order Pizza from Dominos
+
+User can
+
+1)login
+2)search  
+3)selectItem
+4)orderNow
+5)addToCart
+6)confirmOrder
+7)notifyUser
+8)Cancel Order
+
+
+class User
+Data name , emailId , phoneNumber , order, address ;
+Behavior
+//sign in sign up funtionality
+loginDominos(){
+	dominosApp.login(name)
+}
+
+//on sucessful login list of items is displayed
+searchMenu(){
+	return listOfItems;// this list returns all the items that are available in dominos like pizza , pasta , brownie
+}
+
+// select the particular item you wanted to order
+selectItem(){
+	dominosApp.selectedItem(selectedItemName,this.listOfItems);
+}
+
+// Select type of delivery you wanted either carryOut or homeDelivery
+orderNow(){
+ if carryOut(){
+	// user will select the nearest store location and collect the order from that location..
+ }
+ else{ // if it is home delievery
+		user will update his delivery address..
+ }
+
+}
+
+// Details will be added to the cart
+addToCart(){
+	DominosApp.selectedItem(selectedItem,this.listOfItems);
+
+}
+
+// Check for the payment method and confirm the order.
+confirmOrder(){
+if(CreditCard.cardAvailable())
+   DominosApp.selectedItem(selectedItem,this.listOfItems);
+else
+   Error;
+
+}
+
+//we will alert user by giving him confirmation message on email and registered phone no.
+notifyUser(){
+	alert(user);
+}
+
+//if user wanted to cancel the order.
+cancelOrder(){
+	DominosApp.cancelOrder();
+
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class: DominosApp
+Data: status
+
+Behaviour:
+login(userName) {
+List<String> nameList;
+foreach(String name in nameList) {
+if(userName == name)
+status = true;
+}
+status = false;
+}
+
+selectItem(selectedItemName,listOfItems){
+List<Item> selectedItem;
+foreach(Item selectedItemName in listOfItems) {
+if(selectedItemName equals listOfItems)
+   selectedItem.add(product);
+   return selectedItem;
+}
+}
+
+cancelOrder() {
+alert(User);
+User.order = null;
+}
+
+----------------------------------------------------------------------------------------------------------------------
+Class: CreditCard
+Data: type, bankName, cardNumber, address, securityCode, expireDate
+Behaviour:
+cardAvailable() {
+Date currentDate = new Date();
+return currentDate.compareTo(expireDate);
+}
+----------------------------------------------------------------------------------------------------------------------
+
+

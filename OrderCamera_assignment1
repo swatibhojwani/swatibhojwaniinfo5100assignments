@@ -1,0 +1,123 @@
+Buy an camera from Amazon.com
+
+Buyer can
+
+1)loginAmazon
+2)search
+3)AddToCart
+4)reviewOrder
+5)confirmOrder
+6)cancelOrder
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Buyer
+Data name , emailId , phoneNumber , order, address , keywords
+Behavior
+
+//sign in/sign up 
+loginAmazon(){
+	AmazonApp.login(name)
+}
+
+//user can enter different keywords to order camera from amazon search window
+Search(){
+	if(AmazonApp.find(this.data)){
+		return results;
+	}else{
+		Error;
+	}
+}
+
+//from list of products one product is selected and it is added to cart
+AddToCart(){
+	AmazonApp.selectedProd(selectedProductName,this.results);
+}
+
+//user will once review the information for the product he had selected
+reviewOrder(){
+	System.out.print(AmazonApp.selectedProd(selectedProductName,this.results));
+}
+
+//here we will check for the payment method and will confirm the order
+confirmOrder(){
+	if(CreditCard.cardAvailable())
+		AmazonApp.selectedProd(selectedProductName,this.results);
+	else
+		Error;
+}
+
+//if user wanted to cancel the order
+cancelOrder(){
+	AmazonApp.cancelOrder();
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class: AmazonApp
+Data: status
+
+Behaviour:
+login(userName) {
+List<String> nameList;
+foreach(String name in nameList) {
+if(userName == name)
+status = true;
+}
+status = false;
+}
+
+find(userData){
+	List<Product> productList;
+	productList = HelperService.findproduct(userData.keywords);
+	return productList;
+}
+
+selectedProd(selectedProductName , productList){
+List<Product> selectedProd
+foreach(Product product in productList) {
+if(selectedProductName equals productList)
+   selectedProd.add(product);
+   return selectedProd;
+}
+}
+
+cancelOrder() {
+alert(Buyer);
+Buyer.order = null;
+}
+
+----------------------------------------------------------------------------------------------------------------------
+Class: CreditCard
+Data: type, bankName, cardNumber, address, securityCode, expireDate
+Behaviour:
+cardAvailable() {
+Date currentDate = new Date();
+return currentDate.compareTo(expireDate);
+}
+----------------------------------------------------------------------------------------------------------------------
+
+Class: HelperService
+Data: productId, cost,category,description
+Behaviour:
+findProduct(productName) {
+List<Product> productList;
+List<Product> amazonIventoryProductList;//returned from amazon database
+Product product;
+foreach(Product product in amazonIventoryProductList) {
+	if(productName in amazonIventoryProductList){
+	   productList.add(product);
+	return productList;
+	}
+
+}
+}
+
+
+
+
+
+
+
+
+
+
+

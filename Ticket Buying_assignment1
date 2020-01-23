@@ -1,0 +1,158 @@
+Design a platform for buying tickets of local events.
+
+User can
+
+1)login
+2)search
+3)buyTicket
+4)reviewTicketInfo
+5)confirmTicket
+6)notifyUser
+7)cancelTicket
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class User
+Data name , emailId , phoneNumber , ticket  , eventName
+Behavior
+
+//sign in sign up functionality
+login(){
+	App.login(name)
+}
+
+//search for the local events happening in your city
+Search(){
+	if(App.find(this.data)){
+		return results;
+	}else{
+		Error;
+	}
+}
+
+// we will select one event that we are interested in and for that event we will book the ticket and will look for ticket availablity.
+buyTicket(){
+	App.selectedEvent(selectedEventName,this.results);
+	App.bookTicket(selectedEventName);
+
+}
+
+//we will review the all the details of the booked ticket and event 
+reviewTicketInfo(){
+	System.out.print(App.selectedEvent(selectedEventName,this.results));
+}
+
+// ticket is confirmed and will look for payment method
+confirmTicket(){
+	if(CreditCard.cardAvailable())
+		App.selectedEvent(selectedEventName,this.results);
+	else
+		Error;
+}
+
+// user will get message on registered phone number and email id
+notifyUser(){
+	alert(user);
+}
+
+// if user wanted to cancel ticket
+cancelTicket(){
+	App.cancelOrder();
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class: App
+Data: status
+
+Behaviour:
+login(userName) {
+List<String> nameList;
+foreach(String name in nameList) {
+if(userName == name)
+status = true;
+}
+status = false;
+}
+
+find(userData){
+	List<Event> eventList;
+	eventList = MapService.findLocalEvent(userData.keywords);
+	return eventList;
+}
+
+selectedEvent(selectedEventName , eventList){
+	List<Event> selectedEvent
+	foreach(String Event in eventList) {
+	if(selectedEventName equals eventList)
+	   selectedEvent.add(Event);
+	   return selectedEvent;
+	}
+}
+
+bookTicket(selectedEventName){
+ isTicketAvailable= checkTicketAvailablity(selectedEventName);
+ 
+ if(isTicketAvailable){
+	if(CreditCard.cardAvailable())
+		selectedEvent(selectedEventName , eventList)
+	else
+		Error;
+ 
+ }else
+		Error;
+}
+cancelOrder() {
+	alert(User);
+	User.ticket = null;
+}
+
+----------------------------------------------------------------------------------------------------------------------
+Class: CreditCard
+Data: type, bankName, cardNumber, address, securityCode, expireDate
+Behaviour:
+cardAvailable() {
+Date currentDate = new Date();
+return currentDate.compareTo(expireDate);
+}
+----------------------------------------------------------------------------------------------------------------------
+
+Class: MapService
+Data: eventId, eventName,description,ticketId,ticketPrice,ticketType,isTicketAvailable;
+Behaviour:
+findLocalEvent(eventName) {
+List<Event> eventList;
+List<Event> iventoryEventList;//returned from amazon database
+Event event;
+foreach(Event event in iventoryEventList) {
+	if(eventName in iventoryEventList){
+	   eventList.add(event);
+	return eventList;
+	}
+
+}
+}
+
+// check if ticket is available for booking or not.
+checkTicketAvailablity(selectedEventName){
+List<Event> ticketInfo;//list of available tickets returned from database as per eventName or EventId
+Event event;
+foreach(Event event in ticketInfo) {
+	if(event.isTicketAvailable ==true){
+	   return true;
+	}else
+		return false;
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

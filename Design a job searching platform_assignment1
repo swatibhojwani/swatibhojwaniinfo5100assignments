@@ -1,0 +1,88 @@
+Design a job searching platform 
+
+User can
+
+1)login
+2)search  
+3)uploadDetails
+4)reviewDetails
+5)apply
+6)notifyWhenThereAreSimilarJobs
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Class User
+Data name , emailId , phoneNumber  , location , Resume , isExperienced , isProfessional, skills, designation , companyName , salary
+
+Behavior
+//sign in sign up functionality
+login(){
+	App.login(name)
+}
+
+//Search job as per skills, designation,location and company name
+Search(){
+	if(App.find(this.data)){
+		return results;
+	}else{
+		Error;
+	}
+}
+
+// Student details like resume, skills, designation are uploaded 
+uploadDetails(){
+	System.out.println(this.data);
+
+}
+
+//review entire uploaded details
+reviewDetails(){
+	System.out.println(this.data);
+
+}
+
+//submit the entire details and apply for the job.In this student details are uploaded w.r.t selected comapny and job
+apply(){
+	App.submitDetails(selectedJob,this.data);
+
+}
+// Notify when there are similar jobs available on registered phone number and email id
+notifyWhenThereAreSimilarJobs(){
+alert(user);
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class: App
+Data: status
+
+Behaviour:
+login(userName) {
+List<String> nameList;
+foreach(String name in nameList) {
+if(userName == name)
+status = true;
+}
+status = false;
+}
+
+find(userData){
+	List<Job> jobList;
+	jobList = MapService.findJob(userData.keywords);
+	return jobList;
+}
+
+selectedJob(selectedJobName , jobList){
+	List<Job> selectedJob
+	foreach(Job job in jobList) {
+	if(selectedJobName equals job.name)
+	   selectedJob.add(job);
+	   return selectedJob;
+	}
+}
+
+submitDetails(selectedJob, userData){
+	HashMap<T,T> submitDetails ;//here we submitting details of user in the company wrt to selectedJob
+	System.out.println(submitDetails);
+}
+
