@@ -1,0 +1,338 @@
+1) Write a method to take a String and character as input and find how many characters are in the String
+	Example #1
+		Input : "North", 'r'
+		Output : "North" has 1 'r'
+
+Solution :
+
+	/**
+	 * @author Swati Bhojwani
+	 * This method is used to find out no of characters in the given string
+	 * @param input : This is the first parameter used to find characters
+	 * @param c: This is the second parameter used to find characters
+	 * @return int This method returns no of char in a string
+	 */
+	
+	public static int countChar(String input, char c)
+	{
+	    int count = 0;
+
+	    for(int i=0; i < input.length(); i++)
+	    {    if(input.charAt(i) == c)
+	            count++;
+	    }
+	    System.out.println(input+" has " + count+" "+ c);
+	    return count;
+	}
+
+2) Write a method to find the maximum and minimum number in an array of numbers
+	Example:
+		Input : [3, 5, 7, 1, 4, 32, 15]
+		Output : Max is 32 and Min is 1
+
+Solution: 
+
+                /**
+		 * @author Swati Bhojwani
+		 * This Method is used to get maximum value and minimum value from array
+		 * @param arr This is the first parameter used for getting max value in an array
+		 * @return String This method returns maximum value and mininum value in  an array
+		 */
+		public static String getMaxValue(int[] arr) {
+		    int maxVal = arr[0];
+		    int minVal = arr[0];
+		
+		    for (int i = 1; i < arr.length; i++) {
+		    	
+		    	if (arr[i] > maxVal) {
+			    maxVal = arr[i];//for calculating max value
+			        }
+		        if (arr[i] < minVal) {
+		            minVal = arr[i];//for calculating min value
+		        }
+		    }
+		    
+			return "Max is "+maxVal+" and Min value is " +minVal;
+
+		}
+
+
+
+3) Write a java function that adds all the digits of an integer until it is single digit.
+		i. function takes an integer as input and returns its sum of digits.
+		ii. for example input = 37, sum = 3+7 = 10, sum = 1+0 = 1. result = 1.
+
+		Here is the prototype you can work with
+	
+		public int addDigits (int input){
+		}
+
+
+Solution:
+
+	/**
+	 * @author Swati Bhojwani
+	 * @param n This is the first parmeter used for calculating sum of digits
+	 * @return
+	 */
+	public int addDigits(int input) 
+	{ 
+	    int result=0;
+	    if (input == 0)  { // if we are passing input as zero 
+	       System.out.println("Result is "+result);
+	       return result;
+			}
+	       result=(input % 9 == 0) ? 9 : (input % 9);
+	       System.out.printlnSum of digits is "+result);
+	    return result; 
+	} 
+	
+
+4) Question
+
+public class Assignment2 {
+	    // Assignment
+	    /**
+	     * Write a method to calculate the Social Security Tax of an employee and print it.
+	     * If the salary is less than or equal to 8900, the Social Security Tax is 6.2% of the salary.
+	     * If the salary is more than 8900, the Social Security Tax is 6.2% of 106,800.
+	     */
+	    public double socialSecurityTax(Employee employee) {
+	        //write your code here
+	    	
+	    }
+
+Solution:
+-------------------------------------------------------------------------------------------------------------------
+      /**
+	 * This is the pojo class used for returning employee name and its salary.
+	 * 
+       */
+
+    class Employee {
+    
+	 private String empName;
+    	 private double salary;// salary 
+
+    	public Employee(String empName,double salary) {
+           this.empName,  = empName;
+           this.salary = salary;
+    	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+  }
+--------------------------------------------------------------------------------------------------------------------
+      /**
+	 * This method is used for calculating social security tax w.r.t salary of employee class.
+	 * 
+       */
+	public double socialSecurityTax(Employee employee) {
+	        double socialSecTax;
+        	double sal = employee.getSalary();
+            if (sal <= 8900) {//if salary is less than or equal to 8900
+                socialSecTax;= sal * 0.062;
+            } else { // if salary is more than 8900
+                socialSecTax;= 106800 * 0.062;
+            }
+	  System.out.println("Social Security tax of an employee " + employee.getEmpName() +", is" + socialSecTax); 
+       }
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+	
+       /**
+	     * Write a method to calculate an employee's contribution for insurance coverage and print it.
+	     * Amount of deduction is computed as follows:
+	     * If the employee is under 35, rate is 3% of salary; if the employee is between 35 and 50(inclusive), rate is 4% of salary;
+	     * If the employee is between 50 and 60(exclusive), rate is 5% of salary; If the employee is above 60, rate is 6% of salary.
+	     */
+	    public static double insuranceCoverage(Employee employee) {
+	        //write your code here
+	    }
+
+Solution:
+-------------------------------------------------------------------------------------------------------------------
+      /**
+	 * This is the pojo class used for returning employee name and its salary.
+	 * 
+       */
+
+    class Employee {
+    
+	 private String empName;
+    	 private double salary;// salary 
+	 private int age;
+
+    	public Employee(String empName,double salary) {
+           this.empName,  = empName;
+           this.salary = salary;
+    	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+  }
+--------------------------------------------------------------------------------------------------------------------
+
+            /**
+	     * This method is use to calculate an employee's contribution for insurance coverage and print it.
+	     */
+	    public static double insuranceCoverage(Employee employee) {
+		double rate
+        	double sal = employee.getSalary();
+		double age= employee.getAge();
+            if (age <= 35) { // if employee is under 35
+                rate = 0.03*sal;
+            } else if (age >= 35) && (age <= 50){ // if employee age is between 35 and 50 inclusive
+                rate = 0.04*sal;
+            } else if(age >= 50) && (age <= 60){ // if employee age is between 50 and 60 inclusive
+		rate = 0.05*sal;
+	    } else if(age > 60)	{ if employee age is greater than 60
+		rate = 0.06*sal;
+            }
+	   
+	System.out.println("Rate of an employee " + employee.getEmpName() +", is" + rate);     
+    }
+---------------------------------------------------------------------------------------------------------------------------	
+
+	    /**
+	     * Write a method to sort three employees' salary from low to high, and then print their name in order.
+	     * For example, Alice's salary is 1000, John's salary is 500, Jenny's salary is 1200, you should print:
+	     * John Alice Jenny
+	     */
+	    public void sortSalary(Employee e1, Employee e2, Employee e3) {
+	        //write your code here
+	    }
+
+Solution::
+
+/**
+	 * @author Swati Bhojwani
+	 * This method is used to sort employee's salary from lower to higher.
+	 * @param e1 :First parameter
+	 * @param e2 :Second parameter
+	 * @param e3 :Third parameter
+	 */
+	private static void sortSalary(Employee e1, Employee e2, Employee e3) {
+		double[] salArr = { e1.salary, e2.salary, e3.salary }; //employee salary array
+		for (int i = 0; i < salArr.length - 1; i++) {
+			int lowestIndex = i;
+			for (int j = i + 1; j < salArr.length; j++) {
+				if (salArr[j] < salArr[lowestIndex]) {
+					lowestIndex = j;// lowest index
+				}
+			}
+			double smallestNo = salArr[lowestIndex];
+			salArr[lowestIndex] = salArr[i];
+			salArr[i] = smallestNo;
+		}
+		System.out.print("Employees Names from low to high" + " ");
+		for (double i : salArr) { //this loop is used for printing employees names wrt there salaries
+			if (e1.getSalary() == i)
+				System.out.print(e1.getEmpName() + " ");
+			else if (e2.getSalary() == i)
+				System.out.print(e2.getEmpName() + " ");
+			else if (e3.getSalary() == i)
+				System.out.print(e3.getEmpName() + " ");
+		}
+	}
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+//Extra credit
+	
+
+	    /**
+	     * I have written some code below. What I want is to swap two Employee objects.
+	     * One is Jenny and one is John. But after running it, I got the result below:
+	     * Before: a=Jenny
+	     * Before: b=John
+	     * After: a=Jenny
+	     * After: b=John
+	     * There is no change after swap()! Do you know the reason why my swap failed?
+	     * Write your understanding of the reason and explain it.
+	     */
+	    /*
+	     write your understanding here.
+	     Your Answer:
+	    */
+	    public static void main(String[] args) {
+	        Employee a = new Employee("Jenny", 20, Gender.FEMALE, 2000);
+	        Employee b = new Employee("John", 30, Gender.MALE, 2500);
+	        System.out.println("Before: a=" + a.getName());
+	        System.out.println("Before: b=" + b.getName());
+	        swap(a, b);//
+	        System.out.println("After: a=" + a.getName());
+	        System.out.println("After: b=" + b.getName());
+	    }
+	
+
+	    public static void swap(Employee x, Employee y) {
+	        Employee temp = x;
+	        x = y;
+	        y = temp;
+	    }
+--------------------------------------------------------------------------------------------------------------------------
+Explanation:
+
+	• As per given code it is clear that swap function is not working. 
+	• This is because java is pass by value and not pass by reference.
+
+	• As per the given program let us analyze the code step by step:
+
+	• When we create new operator as shown in the program we are creating instance of the class.
+	• Variable contains reference location of memory where the object is saved.
+
+	• As per our example let us assume: variable "a" is pointing to memory location 40.
+	• and variable "b" is pointing to memory location 70 .
+
+	• Employee a = new Employee("Jenny", 20, Gender.FEMALE, 2000); // Memory location 40
+	• Employee b = new Employee("John", 30, Gender.MALE, 2500); //Memory location 70
+
+	• After creating object we are calling swap() method , 
+	• Two new instance variables a and b are created pointing to 40 and 70 memory location respectively.
+
+	• public static void swap(Employee x, Employee y){ //x=40, y=70
+		Employee temp = x; //temp=40 ,x=40,y=70
+		x = y; //temp=40 ,x=70,y=70
+		y = temp;//temp=40, x=70 ,y=40
+	• } 
+
+	• As per the above snippet we think we are changing the value of the employee object x and y 
+	• but actually they are the copies of there memory location and hence the output is not changed.
+
+	• Variable are just reference to the objects and hence java is pass by value not by reference.
+	• That's why there is no change in output.
+
+------------------------------------------------------------------------------------------------------------------------------
