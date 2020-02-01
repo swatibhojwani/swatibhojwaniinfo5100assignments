@@ -1,0 +1,124 @@
+----------------------------------------------------------------------------------------------------------------------------------------
+Question:
+
+Writer a driver class that creates a psychiatrist object and two moody object. The psychaitrust object and two moody object will examine
+and observe two moody object.
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+//abstract class
+public abstract class MoodyObject {
+	
+	protected abstract String getMood();
+	protected abstract void expressFeelings();
+	public void queryMood() {
+		System.out.println("How are you feeling today?");
+	}
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+//Happy object
+public class HappyObject extends MoodyObject  {
+	@Override
+	protected String getMood() {
+		return "Happy";
+	}
+	@Override
+	protected void expressFeelings() {
+		System.out.println("hehehe....hahaha....HAHAHAHAHA!!");
+	}
+	@Override
+	public String toString() {
+		System.out.println("Observation: Subject laughs a lot");
+		return super.toString();
+	}
+	@Override
+	public void queryMood() {
+		super.queryMood();
+	}
+	
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+//Sad Object
+public class SadObject extends MoodyObject{
+	@Override
+	protected String getMood() {
+		return "Sad";
+	}
+	@Override
+	protected void expressFeelings() {
+		System.out.println("'wah' 'boo' 'hoo' 'weep' 'sob' 'weep' ");
+	}
+	@Override
+	public String toString() {
+		System.out.println("Observation: Subject cries a lot");
+		return super.toString();
+	}
+	@Override
+	public void queryMood() {
+		super.queryMood();
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+//PsychaitristObject  
+public class PsychaitristObject {
+	public void examine(MoodyObject moodyObject) {
+		if(moodyObject instanceof HappyObject) { // if person is happy
+			moodyObject.expressFeelings();
+		}else {
+			moodyObject.expressFeelings();// if person is sad
+		}
+	}
+	public void observer(MoodyObject moodyObject) {
+		if(moodyObject instanceof HappyObject) {// if person is happy
+			moodyObject.toString();
+		}else {
+			moodyObject.toString();// if person is sad
+		}
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public class DriverClass {
+	public static void main(String[] args) {
+		Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+		MoodyObject happyObject=new HappyObject();
+		MoodyObject sadObject=new SadObject();
+		PsychaitristObject psychaitristObject =new PsychaitristObject();
+		while(true){
+			System.out.println("How are you feeeling today? or press key E for exit ");
+			String input = myObj.nextLine();// String input
+			if(input.equalsIgnoreCase("I feel happy today?") || input.equalsIgnoreCase(happyObject.getMood())) {
+				psychaitristObject.examine(happyObject);
+				psychaitristObject.observer(happyObject);
+			}else if(input.equals("I feel sad today?") || input.equalsIgnoreCase(sadObject.getMood())) {
+				psychaitristObject.examine(sadObject);
+				psychaitristObject.observer(sadObject);
+			}else if (input.equals("E"))
+				break;
+	}}
+}
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Implementation:
+
+1) when you run this program first message will be displayed  "How are you feeeling today? or press key E for exit "
+2) if user press "E" then program will be terminated or stopped
+3) if user gave answer as "Happy" or "I feel Happy today" then following message should be displayed:
+ a)hehehe....hahaha....HAHAHAHAHA!!
+ b)Observation: Subject laughs a lot
+4) if user gave answer as "Sad" or "I feel Sad today" then following message should be displayed:
+ a)'wah' 'boo' 'hoo' 'weep' 'sob' 'weep' 
+ b)Observation: Subject cries a lot
+5)if you wanted to come out of loop and stop tha application  then press key "E"
+
+
+
+
+
+
+
+
+

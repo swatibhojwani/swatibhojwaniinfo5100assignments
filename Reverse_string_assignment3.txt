@@ -1,0 +1,46 @@
+-------------------------------------------------------------------------------------------------------------------------------------------
+Question:
+
+Given an input string, reverse the string word by word.
+
+Example :"The sky is blue"
+
+Expected output: blue is sky The
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+	/**
+	 * @author Swati bhojwani
+	 * This method is used Reverse the string word by word.
+	 * @param s :  First parameter which is the input string.
+	 * @return String : Reversed String
+	 */
+	public String reverse(String s) {
+		if (s == null || s.equals("")) // Null or empty string
+			return s;
+		s = s.trim(); // Trim function in string class eliminates leading and trailing space
+		String stringArr[] = s.split(" "); // Split function split the string into multiple string,split with Space.
+		String revString = "";// This string is used for storing reversed string
+		for (int i = stringArr.length - 1; i >= 0; i--) { // traverse through the elements
+			if (!stringArr[i].trim().equals("")) {
+				revString += stringArr[i] + " "; //Reversed String
+			}
+		}
+		return revString.trim();//on reversed String use trim() to eliminate spaces
+	}
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Main class used for testing:
+
+
+public static void main(String[] args) {
+		
+String s="The sky is blue";
+System.out.println("New reversed string is >>>"+new Reverse().reverse(s));
+}
+--------------------------------------------------------------------------------------------------------------------------------------------
+Tested with s= "The sky is blue" 
+s="  java class!!  "
+s="" //blank string
+-------------------------------------------------------------------------------------------------------------------------------------------

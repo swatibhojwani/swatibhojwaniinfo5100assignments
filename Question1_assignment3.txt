@@ -1,0 +1,164 @@
+Question: Design a simple registration system that allow student to register in course
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+//This class is used fo adding course and registering student 
+public class Course {
+	
+    private String name; //  name
+    private int numberOfStudents=0;  // Representing no of students in an course
+    private boolean isFull = Boolean.FALSE;//This flag is used when the course is full
+    private Student[] students ;//registration of student to particular course
+    
+    public Course(String name) {
+    	this.name=name;
+    	students = new Student[100];
+}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getNumberOfStudents() {
+		return numberOfStudents;
+	}
+	public void setNumberOfStudents(int numberOfStudents) {
+		this.numberOfStudents = numberOfStudents;
+	}
+
+	public boolean isFull() {
+		return isFull;
+	}
+	public void setFull(boolean isFull) {
+		this.isFull = isFull;
+	}
+	// returns array of registered students in a particular course
+	public Student[] getStudents() {
+		return students;
+	}
+	public void setStudents(Student[] students) {
+		this.students = students;
+	}
+	
+	// this method is used for adding the students to a particular
+	public void registerStudent(Student student) {
+		if (numberOfStudents<10) { // when flag is true and no of students in an class are 10
+		    students[numberOfStudents] = student;
+		    this.numberOfStudents++;
+			System.out.println("Student"+" "+student.getName()+" registered to the course"+" "+getName());
+		}else {
+			System.err.println("Student"+" "+student.getName()+" cannot be added to the course"+" "+getName()+" as "+"\nWe can add 10 students to a particular course");
+			isFull=Boolean.TRUE;
+			System.err.println("Course"+" "+getName()+" is full"+" "+isFull);
+
+		}
+	  }
+	
+
+}
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+//This class is used for adding student to class
+public class Student {
+	
+	    private String name; //  name
+	    private int id;  // Student id
+	    
+	    public Student(String name,int id) {
+			this.name=name;
+			this.id=id;
+		}
+		public Student() {
+			// TODO Auto-generated constructor stub
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public int getId() {
+			return id;
+		}
+		public void setId(int id) {
+			this.id = id;
+		}
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+//This is the driver or main class used for runing test cases
+
+public class TestClass {
+
+	public static void main(String[] args) {
+		
+		//Test case 1: for adding students
+		//we have created 11 students it will add 10 students and
+		//will give error on adding 11th student as max capcity in one course is 10
+		//flag isFull will return true if course is full
+		Student aaa =new Student("aaa",1);
+		Student bbb =new Student("bbb",2);
+		Student ccc =new Student("ccc",3);
+		Student ddd =new Student("ddd",4);
+		Student eee =new Student("eee",5);
+		Student fff =new Student("fff",6);
+		Student ggg =new Student("ggg",7);
+		Student hhh =new Student("hhh",8);
+		Student iii =new Student("iii",9);
+		Student kkk =new Student("kkk",10);
+		Student lll =new Student("lll",11);
+		
+		//add course and register students in that course		
+		Course course1=new Course("JAVA");
+		course1.registerStudent(aaa);
+		course1.registerStudent(bbb);
+		course1.registerStudent(ccc);
+		course1.registerStudent(ddd);
+		course1.registerStudent(eee);
+		course1.registerStudent(fff);
+		course1.registerStudent(ggg);
+		course1.registerStudent(hhh);
+		course1.registerStudent(iii);
+		course1.registerStudent(kkk);
+		course1.registerStudent(lll);
+		
+		//Method for getting no of students 
+		//which will return array of registered student class for that course
+		Student[] student=course1.getStudents();
+		for(Student student1:student) {
+			if(student1!=null)
+			System.out.println("Registered Student in course"+" "+course1.getName()+" "+student1.getName());
+		}
+		
+		System.out.println("Number of students registered in course"+" "+course1.getName()+" "+course1.getNumberOfStudents());
+
+		
+		//Test case 2: 
+		
+		//add students
+		Student one =new Student("one",12);
+		Student two =new Student("two",13);
+		
+		//add course and register students in that course		
+		Course course2=new Course("DATABASE");
+		course2.registerStudent(one);
+		course2.registerStudent(two);
+		
+		//Method for getting no of students 
+		//which will return array of registered student class for that course
+		Student[] stud=course2.getStudents();
+		for(Student student1:stud) {
+		 if(student1!=null)
+			System.out.println("Registered Student in course "+" "+course2.getName()+" "+student1.getName());
+		}
+		
+		System.out.println("Number of students registered in course "+" "+course2.getName()+" "+course2.getNumberOfStudents());
+
+
+	}
+
+}
