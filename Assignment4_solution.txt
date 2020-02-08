@@ -1,0 +1,279 @@
+Solution: for checkout system
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+public abstract class DessertItem {
+	
+    private String name;//dessert item name
+    
+    public DessertItem() { //null contructor
+    	this("");
+	}
+	
+	public DessertItem(String name) { //paramtrized constructor
+			this.name = name;
+	}
+	
+	//return desert item name
+	public final String getName() {
+		return name;
+	}
+	
+	//returns cost of desert item
+	public abstract int getCost();
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public class Candy extends DessertItem {
+
+	private double weight;
+	private int costPerPound;	
+	private int cost;
+	
+	public Candy(String name, double weight, int pricePerPound) {
+		super(name);
+		this.costPerPound = pricePerPound;
+		this.weight = weight;
+	}
+	public int getCost() {
+		this.cost = (int)Math.round(this.weight * this.costPerPound);
+		return cost;
+	}
+	public int getPricePerPound() {
+		return costPerPound;
+	}
+	
+	public double getWeight() {
+		return weight;
+	}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+public class Cookie extends DessertItem {
+	private int number;
+	private int costPerDozen;// in cents
+	private int cost;
+	
+	public Cookie(String name, int number, int pricePerDozen) {
+		super(name);
+		this.number = number;
+		this.costPerDozen = pricePerDozen;
+	}
+	
+	public int getCost() {
+		cost = (int)Math.round(number / 12.0 * costPerDozen);
+		return cost;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public int getPricePerDozen() {
+		return costPerDozen;
+	}
+	
+}
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public class IceCream extends DessertItem {
+
+	private int cost; // icecream cost is in cents
+
+	public IceCream(String name, int cost) {
+		super(name);
+		this.cost = cost;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public class Sundae extends IceCream {
+	
+	private String toppingName;
+	private int toppingPrice;
+	private int cost;
+	
+	public Sundae(String iceCreamName, int iceCreamCost, String toppingName, int toppingPrice) {
+		super(iceCreamName, iceCreamCost);
+		this.toppingName = toppingName;
+		this.toppingPrice = toppingPrice;		
+	}
+	
+	public int getCost() {
+		cost = this.toppingPrice + super.getCost();
+		return cost;
+	}
+	
+	public String getTopping() {
+		return toppingName;
+	}
+	
+	
+
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// This class is defined for creating constants
+public class DessertShoppe {
+
+	public final static double TAX_RATE = 6.5; 
+	public final static String STORE_NAME = "M & M Dessert Shoppe";
+	public final static int COST_WIDTH = 10;
+	
+	//This method is used for cents to dollar conversion
+	public static String cents2dollarsAndCents(int cents) {
+		String resultString = "";
+		int dollars = (cents / 100);
+		cents = cents % 100;
+		if (dollars > 0)
+			resultString += Integer.toString(dollars);
+		resultString += ".";
+		if (cents < 10)
+			resultString += Integer.toString(0);
+		resultString += Integer.toString(cents);
+		return resultString;
+	}
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public class CheckOut {
+
+		private Vector<DessertItem> myDessertItems; //vector is used to store the desert items
+		private int numberOfItems;
+		private final int RECEIPT_WIDTH_CONSTANT = 50;
+		
+		public CheckOut() {
+			myDessertItems = new Vector<DessertItem>();
+			numberOfItems = 0;
+		}
+		
+		//returns no of items in desert shopee
+		public int numberOfItems() {
+			return numberOfItems;
+		}
+		
+		//this method is used adding item in dessert shopee 
+		public void enterItem(DessertItem item) {
+			this.myDessertItems.add(item);
+			numberOfItems++;
+		}
+		//clear the dessert items 
+		public void clear() {
+			for(int i = 0; i < numberOfItems; i++)
+				this.myDessertItems.clear();
+			    numberOfItems = 0;
+		}
+		
+		//This method is used for calculating total cost of items 
+		public int totalCost() {
+			int total = 0;
+			for(int i = 0; i < numberOfItems; i++) 
+				total += myDessertItems.elementAt(i).getCost(); 
+			return total;
+		}
+		
+		//this method is used for calculating total tax on total cost of items
+		public int totalTax() {
+			return (int)Math.round(this.totalCost() * DessertShoppe.TAX_RATE / 100.00);
+		}
+	
+		//used of printing bill
+	public String toString() {
+		String reciept = "";// receipt
+		reciept += "    " + DessertShoppe.STORE_NAME + "\n";
+		reciept += "    " + "--------------------" + "\n";
+		for (int m = 0; m < numberOfItems; m++) { // traversing through no of items
+			String itemCost = DessertShoppe.cents2dollarsAndCents(myDessertItems.elementAt(m).getCost()); // price of
+			String itemName = myDessertItems.elementAt(m).getName(); // items name
+
+			if (myDessertItems.elementAt(m) instanceof Cookie) { // print if Cookie
+				reciept += ((Cookie) myDessertItems.elementAt(m)).getNumber() + " @ "
+						+ DessertShoppe.cents2dollarsAndCents(((Cookie) myDessertItems.elementAt(m)).getPricePerDozen())
+						+ " /dz\n";
+				while (itemName.length() < RECEIPT_WIDTH_CONSTANT - itemCost.length()) {
+					itemName += " ";
+				}
+				reciept += itemName + itemCost + "\n";
+			} else if (myDessertItems.elementAt(m) instanceof IceCream) { // print if ice cream
+				while (itemName.length() < RECEIPT_WIDTH_CONSTANT - itemCost.length()) {
+					itemName += " ";
+				}
+				reciept += itemName + itemCost + "\n";
+			} else if (myDessertItems.elementAt(m) instanceof Sundae) { // for Sundae
+				reciept += ((Sundae) myDessertItems.elementAt(m)).getTopping() + " Sundae with\n";
+				while (itemName.length() < RECEIPT_WIDTH_CONSTANT - itemCost.length()) {
+					itemName += " ";
+				}
+				reciept += itemName + itemCost + "\n";
+			} else { // for Candy
+				reciept += ((Candy) myDessertItems.elementAt(m)).getWeight() + " lbs @ "
+						+ DessertShoppe.cents2dollarsAndCents(((Candy) myDessertItems.elementAt(m)).getPricePerPound())
+						+ " /lb.\n";
+				while (itemName.length() < RECEIPT_WIDTH_CONSTANT - itemCost.length()) {
+					itemName += " ";
+				}
+				reciept += itemName + itemCost + "\n";
+			}
+		}
+
+		String nxtLine = "\nTax";
+		String itemTax = DessertShoppe.cents2dollarsAndCents(this.totalTax()); // This is the total tax on no of items
+		while (nxtLine.length() <= RECEIPT_WIDTH_CONSTANT - itemTax.length())
+			nxtLine += " ";
+		reciept += nxtLine + itemTax;
+		String totalCostofItem = DessertShoppe.cents2dollarsAndCents(this.totalCost() + this.totalTax()); // print total
+		nxtLine = "\nTotal Cost";
+		while (nxtLine.length() <= RECEIPT_WIDTH_CONSTANT - totalCostofItem.length())
+			nxtLine += " ";
+		reciept += nxtLine + totalCostofItem;
+		return reciept;
+	}
+	}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//This is the main class used for testing checkout system.
+public class TestCheckOut {
+
+	public static void main(String[] args) {
+		  
+	    CheckOut checkout = new CheckOut();
+	    checkout.enterItem(new Candy("Peanut Butter Fudge", 2.25, 399));
+	    checkout.enterItem(new IceCream("Vanilla Ice Cream",105));
+	    checkout.enterItem(new Sundae("Choc. Chip Ice Cream",145, "Hot Fudge", 50));
+	    checkout.enterItem(new Cookie("Oatmeal Raisin Cookies", 4, 399));
+	    System.out.println("\nNumber of items: " + checkout.numberOfItems() + "\n");
+	    System.out.println("\nTotal cost: " + checkout.totalCost() + "\n");
+	    System.out.println("\nTotal tax: " + checkout.totalTax() + "\n");
+	    System.out.println("\nCost + Tax: " + (checkout.totalCost() + checkout.totalTax()) + "\n");
+	    System.out.println(checkout);
+	    
+	    checkout.clear();
+	    
+	    checkout.enterItem(new IceCream("Strawberry Ice Cream",145));
+	    checkout.enterItem(new Sundae("Vanilla Ice Cream",105, "Caramel", 50));
+	    checkout.enterItem(new Candy("Gummy Worms", 1.33, 89));
+	    checkout.enterItem(new Cookie("Chocolate Chip Cookies", 4, 399));
+	    checkout.enterItem(new Candy("Salt Water Taffy", 1.5, 209));
+	    checkout.enterItem(new Candy("Candy Corn",3.0, 109));
+	    
+	    System.out.println("\nNumber of items: " + checkout.numberOfItems() + "\n");
+	    System.out.println("\nTotal cost: " + checkout.totalCost() + "\n");
+	    System.out.println("\nTotal tax: " + checkout.totalTax() + "\n");
+	    System.out.println("\nCost + Tax: " + (checkout.totalCost() + checkout.totalTax()) + "\n");
+	    System.out.println(checkout);
+	  }
+
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
