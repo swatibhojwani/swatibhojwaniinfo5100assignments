@@ -1,0 +1,231 @@
+Question 1: Given a string find first non repeating character in it and return the index.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+package assignment5;
+
+public class Ques1 {
+	
+	public char count[]=new char[256];//creating an count array of 256 characters.
+
+       //This is the main class for testing the functionality of non repeating characters in an given string.
+	public static void main(String[] args) {
+		String input="leetcode";
+		//String input="engineerring"; //second test case
+		Ques1 ques= new Ques1();
+		ques.getNonRepeatingCharIndex(input);
+		
+	}
+	
+	/**
+	 * @author Swati Bhojwani	
+	 * This method calculates count of each character in given string.
+	 * @param s Input String
+	 */
+	public void getCountOfChar(String s) {
+		if (s != null) {
+			for (int i = 0; i < s.length(); i++) {
+				count[s.charAt(i)]++;
+			}
+		}
+	}
+	
+	
+	/**
+	 * @author Swati Bhojwani
+	 * This method returns index of first non repeating character in an given string.
+	 * @param s Input string
+	 * @return
+	 */
+	
+	public int getNonRepeatingCharIndex(String s) {
+		int index=-1;// return index as -1 if non repeating characters doesn't exist in given string.
+		getCountOfChar(s);//this method returns count of all characters in given string
+		for(int m=0;m<s.length();m++) {
+			if(count[s.charAt(m)]==1) {
+				System.out.println("Index of non repeating character "+s.charAt(m)+" is "+m);
+				return m;
+			}
+		}
+		System.out.println("Non repeating characters doesn't exist in given string so return -1 as index");
+		return index;
+		
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question2:Given an non negative integer no,repeatedly add its all digits until the result becomes single digit.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+package assignment5;
+
+public class Ques2 {
+
+       //This is the main class for testing the functionality of adding all the digits.
+	public static void main(String[] args) {
+		Ques2 ques=new Ques2();
+		ques.addDigits(38);
+	}
+
+	/**
+	 * @author Swati Bhojwani
+	 * @param input:Input number
+	 * @return int : Sum of digits
+	 */
+	public int addDigits(int input) {
+		int result = 0;
+		if (input == 0) { // if we are passing input as zero
+			System.out.println("Result is " + result);
+			return result;
+		}
+		result = (input % 9 == 0) ? 9 : (input % 9);
+		System.out.println("Sum of digits is " + result);
+		return result;
+	} 
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Ques3:Given an array write an function to move all zero's to the end of the array while maintianing it's relative order of non zero element
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+
+package assignment5;
+
+public class Ques3 {
+
+	public static void main(String[] args) {
+	       Integer arr[] = {0,1,0,3,12};
+	       Ques3 ques3 = new Ques3();
+	       ques3.move0sToStart(arr);
+	 }
+	
+	/**
+	 * @author Swati bhojwani
+	 * This method is used to move 0's to the end of an array
+	 * @param arr :  First parameter
+	 * 
+	 */
+	public  void move0sToStart(Integer[] arr) {
+		int arrlength = arr.length;
+		int count = 0;//maintaining count variable for non zero element.
+		for (int i = 0; i < arrlength; i++) {// Traverse through array of elements
+			if (arr[i] != 0) {// If elements are not zero,then move ahead
+				arr[count++] = arr[i];
+			}
+		}
+		
+		while (count < arrlength) {// Zero's at the end of an array
+			arr[count++] = 0;
+		}
+		System.out.println("New arry with zero's at the end is ");
+		for (int m = 0; m < arrlength; m++) {
+			System.out.println(arr[m]);
+		}} 
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ques4:Given a string find the longest panlindromic substring in s
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+package assignment5;
+
+public class Ques4 {
+
+	public static void main(String[] args) {
+		String s = longestPalindrome("babad");
+		System.out.println("Longest panlindromic substring in given string is  >>> " + s);
+	}
+
+	public static String longestPalindrome(String s) {
+        
+        if (s.isBlank() || s.length() == 1) // if string is null/blank input or if length is 1
+        	return s;
+        
+        int start = 0, end = 0;//we have taken substring boundry indexes for palindrome
+        
+        for (int i = 0; i < s.length(); i++) {
+            int length = Math.max(
+                expandAroundCenter(s, i, i), // Odd palindromes
+                expandAroundCenter(s, i, i + 1) // Even palindromes
+            ); // Longest length returned by this method will be the biggest palindrome
+            
+            // Verify if calculated length is larger than boundary index range
+            if (length > end - start) {
+                start = i - ((length - 1) / 2);
+                end = i + (length / 2);
+            }
+        }
+        
+        // Return longest palindrome substring in gievn string. we have used end + 1 so it won't leave the last character
+        return s.substring(start, end + 1);
+    }
+    
+    public static int expandAroundCenter(String s, int low, int high) {
+        // While characters at indexes are equal.Expand indexes until indexes are out of bounds. 
+        while(low >= 0 && high < s.length() && s.charAt(low) == s.charAt(high)) {
+            low--;
+            high++;
+        }
+        
+        // Return length of palindrome minus 1.
+        return high - low - 1;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ques 5: You are given an n*n 2D matrix rotate the image by 90 degree
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+
+
+package assignment5;
+
+public class Ques5 {
+
+	/**
+	 * This method is used for testing.
+	 */
+	public static void main(String[] args) {
+		int[][] matrix = { {1, 2 ,3}, {4,5,6},{7,8,9} };
+		System.out.println("New rotated matrix is >>");
+		rotateImgBy90(matrix);
+
+	}
+
+	/**
+	 * This method rotates image by 90 degrees
+	 * @param row
+	 * @param col
+	 * @param matrix
+	 */
+	private static void rotateImgBy90(int[][] matrix) {
+		for (int j = 0; j < matrix.length; j++) {
+			for (int i = matrix.length - 1; i >= 0; i--) {
+				System.out.print(matrix[i][j] + "\t");
+			}
+			System.out.println();
+		}
+	}
+
+	
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
