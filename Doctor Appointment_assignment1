@@ -1,0 +1,119 @@
+Design an app to book a doctor’s appointment using your medical insurance provider
+
+User can :
+
+1)loginInsurance
+2)SearchDoctorByType
+3)bookAppointment
+4)reviewAppointment
+5)confirmAppointment
+6)notifyUser
+7)cancelAppointment
+
+
+class User
+Data name , emailId , phoneNumber , insuranceProvider , insurancePlan , doctorType,appointment,isCoverageAvailable
+
+//sign in sign up functionality
+loginInsuranceApp(){
+	InsuranceApp.login(name)
+}
+
+// search doctor by dentist like dentist , heart spectialist etc
+SearchDoctorByType(){
+	if(InsuranceApp.find(this.data)){
+		return results;
+	}else{
+		Error;
+	}
+}
+
+//book appoinment with the selected doctor
+bookAppointment(){
+	InsuranceApp.selectedDoctor(selectedDoctorName,this.results);
+}
+
+//review entire details for the booked appointment
+reviewAppointment(){
+	System.out.print(InsuranceApp.selectedDoctor(selectedDoctorName,this.results));
+}
+
+//while confirming apointment check if the selected doctor is covered in your coverage plan of insurance or not. 
+confirmAppointment(){
+	if(this.isCoverageAvailable())
+		InsuranceApp.selectedDoctor(selectedDoctorName,this.results);
+	else
+		Error;
+}
+
+notifyUser(){
+alert(user);//user gets confirmation message on email id and registered phone number.
+}
+
+// if user wanted to cancel appointment
+cancelAppointment(){
+	InsuranceApp.cancelAppointment();
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Class: InsuranceApp
+Data: status
+
+Behaviour:
+login(userName) {
+List<String> nameList;
+foreach(String name in nameList) {
+if(userName == name)
+status = true;
+}
+status = false;
+}
+
+find(userData){
+	List<Doctor> doctorList;
+	doctorList = HelperService.findDoctor(userData.doctorType);
+	return doctorList;
+}
+
+selectedDoctor(selectedDoctorName , doctorList){
+List<Doctor> selectedDoctor
+foreach(Doctor doctor in doctorList) {
+if(selectedProductName equals doctorList)
+   selectedDoctor.add(doctor);
+   return selectedDoctor;
+}
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+cancelAppointment() {
+alert(User);
+User.appointment = null;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Class: HelperService
+Data: docId,docName,description,location,docType
+Behaviour:
+findDoctor(docName) {
+List<Doctor> docList;
+List<Doctor> docListDB;//returned from database
+Doctor doctor;
+foreach(Doctor doctor in docListDB) {
+	if(docName in docListDB){
+	   docList.add(docName);
+	return docList;
+	}
+
+}
+}
+
+
+
+
+
+
