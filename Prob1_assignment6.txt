@@ -1,0 +1,89 @@
+
+Part A: 
+Class Mreview (in "Mreview.java")
+Mreview is a class which contains a movie title and the movie's ratings. Ratings are stored in a Java ArrayList<Integer> object.
+This class should have 2 member variables: title and ratings.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+
+
+package prob1;
+
+import java.util.ArrayList;
+
+public class Mreview implements Comparable<Mreview> {
+
+	private String title; // title of the movie
+	private ArrayList<Integer> ratings; // list of ratings stored in a Store object
+
+	public Mreview() {// constructor 1
+		this.title = "";
+		this.ratings = new ArrayList<Integer>();
+	}
+
+	Mreview(String ttl) {// constructor 2
+		this.title = ttl;
+		this.ratings = new ArrayList<Integer>();
+
+	}
+
+	Mreview(String ttl, int firstRating) { // constructor 3
+		this.title = ttl;
+		this.ratings = new ArrayList<Integer>();
+		this.ratings.add(firstRating);
+	}
+
+	public String getTitle() {// method1
+		return title;
+	}
+
+	public void addRating(int r) {// method2
+		this.ratings.add(r);
+	}
+
+	public double aveRating() { // method3
+		Integer sum = 0;
+		if (!this.ratings.isEmpty()) {
+			for (Integer rating : this.ratings) {
+				sum += rating;// calculating sum
+			}
+			return sum.doubleValue() / ratings.size();
+		}
+		return sum;
+
+	}
+
+	public int sizeRatings() {// method 4
+		return this.ratings.size();
+
+	}
+
+	@Override
+	public int compareTo(Mreview o) {// method 5
+		/*
+		 * Sorting by title. compareTo should return < 0 if this(keyword) is supposed to
+		 * be less than o.title, > 0 if this.title is greater than object o and 0 if
+		 * they are equal.
+		 */
+		int title = this.title.compareTo(o.title);
+		// Sorting by title if title is same o
+		return title == 0 ? this.title.compareTo(o.title) : title;
+
+	}
+
+	@Override
+	public boolean equals(Object obj) {// method 6
+		Mreview mreview = (Mreview) obj;
+		if (this.title.equals(mreview.getTitle()))
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public String toString() {// method 7
+		return "" + getTitle() + ", average " + aveRating() + ", out of " + sizeRatings() + "ratings";
+	}
+
+}

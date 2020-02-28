@@ -1,0 +1,136 @@
+Part B:
+Implement the following two classes which are in an inheritance relation:
+        Account 
+          | 
+   CheckingAccount 
+Your job is to complete the classes.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+package prob2;
+
+public class Account {
+	
+	protected String firstName;
+	protected String lastName;
+	protected double curBalance;
+	
+	
+	public Account(String fname, String lname, double curBalance) {
+		this.firstName=fname;
+		this.lastName=lname;
+		this.curBalance=curBalance;
+	}
+	
+	public String getAccType() {
+		return Account.class.getName();
+		
+	}
+	
+	public double debitTransaction(double debitAmount) {
+		curBalance=curBalance-debitAmount;
+		return curBalance;
+	}
+	
+	public double creditTransaction(double creditAmount) {
+		curBalance=curBalance+creditAmount;
+		return curBalance;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public double getCurrentBal() {
+		return curBalance;
+	}
+
+
+	public void setCurrentBal(double currentBal) {
+		this.curBalance = currentBal;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Account [firstName=" + firstName + ", lastName=" + lastName + ", currentBal=" + curBalance + "]";
+	}
+	
+
+	
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package prob2;
+
+public class CheckingAccount extends Account{
+
+	public final static double MINIMUM_BALANCE = 1500;
+	public final static double PENALTY_FEE = 10.0;
+
+	public CheckingAccount(String fname, String lname, double curBalance) {
+		super(fname, lname, curBalance);
+	}
+	
+	@Override
+	public double creditTransaction(double creditAmount) {
+		this.curBalance= super.creditTransaction(creditAmount);
+		if(this.curBalance<MINIMUM_BALANCE) {
+			chargeFee(this.curBalance);
+			return this.curBalance;
+		}
+		return this.curBalance;
+	}
+	
+	@Override
+	public double debitTransaction(double debitAmount) {
+		this.curBalance=super.debitTransaction(debitAmount);
+		if(this.curBalance<MINIMUM_BALANCE) {
+			chargeFee(this.curBalance);
+			return this.curBalance;
+		}
+		return this.curBalance;
+			
+	}
+	
+	private void chargeFee(double curBalance) {
+		if(curBalance<MINIMUM_BALANCE) {
+			this.curBalance= curBalance-PENALTY_FEE;
+		}
+		
+	}
+
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+package prob2;
+
+public class SavingAccount extends Account{
+
+	public SavingAccount(String fname, String lname, double curbalance) {
+		super(fname, lname, curbalance);
+	}
+	
+	
+
+}
+

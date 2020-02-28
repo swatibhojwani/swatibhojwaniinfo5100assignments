@@ -1,0 +1,258 @@
+Part C:
+This assignment requires you to develop an object oriented software system in Java that will keep track of pets treated and boarded in an animal hospital. Detail class specifications (data members, methods and access modifiers) are described below. Please note the following requirements: 
+
+• You need to implement each class in a separate file. 
+• While implementing the design you may want to follow the order the classes are specified below and test each class individually. 
+---------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+package prob3;
+
+public class Pet {
+
+	private String name;
+	private String ownerName;
+	private String color;
+	protected int sex;
+	public static final int MALEID = 1, FEMALEID = 2, SPAYEDID = 3, NEUTEREDID = 4;
+
+	Pet(String name, String ownerName, String color) {
+		this.setName(name);
+		this.setOwnerName(ownerName);
+		this.setColor(color);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getSex() {
+		if (MALEID == 1)
+			return "MALE";
+		else if (FEMALEID == 1)
+			return "FEMALE";
+		else if (SPAYEDID == 3)
+			return "SPAYED";
+		else
+			return "NEUTERED";
+
+	}
+
+	public void setSex(int sexid) {
+		sex = sexid;
+	}
+
+	@Override
+	public String toString() {
+		return "Pet [name=" + name + ", ownerName=" + ownerName + ", color=" + color + ", sex=" + getSex() + "]";
+	}
+
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+INTERFACE:::
+
+
+package prob3;
+
+public interface Boardable
+{
+  public void setBoardStart(int month,int day, int year);
+  public void setBoardEnd(int month,int day, int year);
+  public boolean boarding(int month,int day, int year);
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+HELPER CLASS:::
+
+
+package prob3;
+
+public class Date {
+
+	private int Day, Month, Year;
+
+	public Date(int Day, int Month, int Year) {
+		this.Day = Day;
+		this.Month = Month;
+		this.Year = Year;
+	}
+
+	public boolean lessThan(Date date) {
+		if (this.Year < date.Year)
+			return true;
+		else if (this.Year == date.Year) {
+			if (this.Month < date.Month)
+				return true;
+			else if (this.Month == date.Month && this.Day <= date.Day)
+				return true;
+		}
+		return false;
+	}
+
+	public boolean greaterThan(Date date) {
+		if (this.Year > date.Year)
+			return true;
+		else if (this.Year == date.Year) {
+			if (this.Month > date.Month)
+				return true;
+			else if (this.Month == date.Month && this.Day >= date.Day)
+				return true;
+		}
+		return false;
+	}
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+package prob3;
+
+
+public class Cat extends Pet implements Boardable {
+	private String hairLength;
+	private Date boardingStartDate;
+	private Date boardingEndDate;
+
+	Cat(String name, String ownerName, String color, String hairLength) {
+		super(name, ownerName, color);
+		this.setHairLength(hairLength);
+
+	}
+	public String getHairLength() {
+		return hairLength;
+	}
+
+	public void setHairLength(String hairLength) {
+		this.hairLength = hairLength;
+	}
+
+	@Override
+	public String toString() {
+		return "Cat [hairLength=" + hairLength + "]";
+	}
+
+	@Override
+	public void setBoardStart(int month, int day, int year) {
+		boardingStartDate = new Date(day, month, year);
+	}
+
+	@Override
+	public void setBoardEnd(int month, int day, int year) {
+		new Date(day, month, year);
+	}
+
+	@Override
+	public boolean boarding(int month, int day, int year) {
+		Date date = new Date(month, day, year);
+		return (date.greaterThan(boardingStartDate) && (date).lessThan(boardingEndDate));
+	}
+
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+package prob3;
+
+public class Dog extends Pet implements Boardable{
+    private String size;
+    private Date boardingStartDate;
+    private Date boardingEndDate;
+    
+    public Dog (String name, String ownerName, String color, String size) {
+        super(name, ownerName, color);
+        this.size=size;
+    }
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	@Override
+	public void setBoardStart(int month, int day, int year) {
+		boardingStartDate = new Date(day, month, year);
+	}
+
+	@Override
+	public void setBoardEnd(int month, int day, int year) {
+		boardingEndDate = new Date(day, month, year);
+	}
+
+	@Override
+	public boolean boarding(int month, int day, int year) {
+		Date date = new Date(day, month, year);
+		return (date.greaterThan(boardingStartDate) && date.lessThan(boardingEndDate));
+	}
+	
+	@Override
+	public String toString() {
+		return "Dog [size=" + size + "]";
+	}
+
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+//main class used for testing
+package prob3;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Pet pet= new Pet("Spot", "Marry", "Black and white");
+		pet.setSex(Pet.MALEID);
+
+		Dog dog = new Dog("Spot", "SUSAN", "WHITE", "MEDIUM");
+		dog.setSex(Pet.SPAYEDID);
+		Cat cat = new Cat("TOM", "BOB", "BLACK", "SHORT");
+		cat.setSex(Pet.SPAYEDID);
+		
+		System.out.println("PET:");
+		System.out.println(pet.getName()+ " owned by "+pet.getOwnerName());
+		System.out.println("Colour: "+pet.getColor());
+		System.out.println("Sex is "+pet.getSex());
+		
+		System.out.println("DOG:");
+		System.out.println(dog.getName()+ "owned by "+dog.getOwnerName());
+		System.out.println("Colour: "+dog.getColor());
+		System.out.println("Sex is "+dog.getSex());
+		System.out.println("Size: "+dog.getSize());
+
+
+		System.out.println("CAT:");
+		System.out.println(cat.getName()+ " owned by "+cat.getOwnerName());
+		System.out.println("Colour: "+cat.getColor());
+		System.out.println("Sex is "+cat.getSex());
+		System.out.println("Hair is "+cat.getHairLength());
+
+
+	}
+
+}
+
