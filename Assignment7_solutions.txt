@@ -1,0 +1,192 @@
+Ques1:
+
+When a program fails due to an uncaught exception, the system automatically prints out the exception’s stack trace. If the failure is not easily reproducible, it may be difficult or impossible to get any more information. Therefore, it is critically important that the exception’s toString() method return, as much information as possible concerning the cause of the failure. In other words, the detail message of an exception should capture the failure for subsequent analysis. To capture the failure, the detail message of an exception should contain the values of all parameters and fields that “contributed to the exception.” (Score 2). 
+
+
+• Create your own MyIndexOutOfBoundException Class. It should contain these parameters o lowerBound - the lowest legal index value. o upperBound - the highest legal index value. o index - the current index value. • Test your code in main method, by creating an indexOutOfBoundException. Output error message should be like this: “Error Message: Index: 10, but Lower bound: 0, Upper bound: 9”
+
+----------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+package assignment7;
+
+import java.util.Random;
+
+public class MyIndexOutOfBoundException extends RuntimeException{
+	int lowerBound, upperBound, index;
+	
+	public MyIndexOutOfBoundException() {
+
+	}
+	
+	public MyIndexOutOfBoundException(int index,int lowerBound,int upperBound) {
+		this.index=index;
+		this.lowerBound=lowerBound;
+		this.upperBound=upperBound;
+	 }
+	
+	@Override
+	public String toString() {
+		return "Error Message: Index: " + index + ", but Lower bound: " + this.lowerBound + ", Upper Bound: "+ this.upperBound;	
+	}
+	
+	public static void main(String[] args) {
+	    final int SIZE = 10;
+	    int[] arr = new int[SIZE];
+	    Random random = new Random();
+	    System.out.println("Random access in an array with size " + SIZE );
+	    while (true) {
+	      int i = random.nextInt(SIZE + SIZE / 2);
+	      try {
+	        System.out.println("Accessing number with index: " + i);
+	        if (i >= SIZE)
+	          throw new MyIndexOutOfBoundException(i, 0, SIZE - 1);
+	      } catch (Exception ex) {
+	        System.out.println(ex);
+	        return;
+	      }
+	    }
+	  }
+
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Ques2:
+
+Write a program that calculate the sum value in an array of ints using 4 threads. You should construct an 4,000,000 long array of random numbers and return the sum of the array. Please finish those two method: generateRandomArray and sum.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+package prob2;
+
+import java.util.Random;
+
+public class SumValue extends Thread {
+
+    private int[] arr;
+    private int low, high;
+    private long threadSum;
+
+    public SumValue(int[] arr, int low, int high) {
+        this.arr = arr;
+        this.low = low;
+        this.high = Math.min(high, arr.length);
+    }
+
+	public long getThreadSum() {
+		return threadSum;
+	}
+	
+    public void run() {
+    	threadSum = sum(arr, low, high);
+    }
+
+    /*get sum of an array using 4 threads*/
+    public static long sum(int[] arr) {
+        return parallelThreadSum(arr, 4);
+    }
+
+    public static long sum(int[] arr, int low, int high){
+        long total = 0;
+
+        for (int i = low; i < high; i++) {
+            total += arr[i];
+        }
+        return total;
+    }
+
+    //1) This method will divide the thread into 4 parts 
+    //2) As size of arr is 4000000 so it will be divided into 4 arrays of 100000
+    //3) After that we will loop 4 times and create 4 new instances of thread
+    //4) Join method is used so that after one thread execution is completed another will join
+    //5) After that run method will be excecuted and it will get particular thread sum and store it in getThreadSum()
+    //6) Finally,it will return total for 4 threads
+    public static int parallelThreadSum(int[] arr, int threads){
+        int size = (int) Math.ceil(arr.length * 1.0 / threads);
+        SumValue[] sums = new SumValue[threads];
+        for (int i = 0; i < threads; i++) {
+            sums[i] = new SumValue(arr, i * size, (i + 1) * size);
+            sums[i].start();
+        }
+        try {
+            for (SumValue sum : sums) {
+                sum.join();
+            }
+        } catch (InterruptedException e) {
+        	e.printStackTrace();
+        }
+        int total = 0;
+        for (SumValue sum : sums) {
+            total += sum.getThreadSum();
+        }
+        return total;
+    }
+    
+    /* generate array of random numbers */ 
+	static void generateRandomArray(int[] arr) {
+		Random rd = new Random(); // creating Random object
+		for (int i = 0; i < arr.length; i++) {
+	         arr[i] = rd.nextInt(); // storing random integers in an array
+	         System.out.println(arr[i]); // printing each array element
+	      }
+	}
+    
+    public static void main(String[] args) {
+    	int[] arr = new int[4000000];
+		generateRandomArray(arr);
+		long sum = sum(arr);
+		System.out.println("Sum: " + sum);
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Ques3:
+
+Write a program called ReverseHello.java that creates a thread (let's call it Thread 1). Thread 1 creates another thread (Thread 2); Thread 2 creates Thread 3; and so on, up to Thread 50. Each thread should print
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+package assignment7;
+
+class ReverseHello extends Thread {
+	private int counter;
+	public ReverseHello(int counter) {
+		super("Thread" + counter);
+		this.counter = counter;
+	}
+
+	public void run() {
+		counter++;
+		if (counter <= 51) {
+			ReverseHello revThread = new ReverseHello(counter);
+			revThread.start();
+			try {
+				revThread.join();
+				System.out.println("Hello from " + getName());
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	public static void main(String args[]) {
+		ReverseHello th1 = new ReverseHello(1);
+		th1.start();
+	}
+
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
